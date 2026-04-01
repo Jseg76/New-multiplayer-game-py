@@ -1,2 +1,2 @@
 print('asduhaiufgiuagiufdgakvgdvak')
-print('committed')
+print('sped')
