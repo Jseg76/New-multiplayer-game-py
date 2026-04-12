@@ -5,7 +5,7 @@
 import pygame
 import pickle
 import socket as s
-from player import Player
+from player import Player, Block
 
 WIDTH = 800; HEIGHT = 600
 win = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -20,16 +20,27 @@ running = True; clock = pygame.time.Clock()
 players = []
 player = Player(100, 100, 30, 30, (255,0,0))
 
+testBlock = Block(400, 400, 50, 100, (0,0,0))
+floor = Block(0, 500, 800, 100, (153, 142, 104))
+blocks = [floor,
+          testBlock,]
+
 while running:
+    print(player.jumping)
     try:
         client.send(pickle.dumps(player))
         players = pickle.loads(client.recv(2048))
     except:
-        print("Failed")
+        ...
+    for block in blocks:
+        block.draw(win)
 
-    player.move()
+    player.update()
     for p in players:
+        try:
             p.draw(win)
+        except:
+            ...
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

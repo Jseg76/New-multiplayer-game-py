@@ -25,7 +25,6 @@ def handle_client(conn, num):
             data = pickle.loads(conn.recv(2048))
             playerData[num] = data
             conn.send(pickle.dumps(playerData))
-            print(playerData)
         except:
             clientNum -= 1
             conn.close()
