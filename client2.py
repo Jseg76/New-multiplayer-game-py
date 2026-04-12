@@ -18,7 +18,7 @@ client.connect(('192.168.68.74', 8000))
 running = True; clock = pygame.time.Clock()
 
 players = []
-player = Player(100, 100, 30, 30, (255,0,0))
+player = Player(100, 100, 30, 30, (255,0,255))
 
 while running:
     try:
