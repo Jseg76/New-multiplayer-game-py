@@ -5,6 +5,8 @@ class Block:
     def __init__(self, x, y, width, height, color):
         self.x, self.y = x, y
         self.w, self.h = width, height
+        self.top, self.bottom = y, y + height
+        self.left, self.right = x, x + width
         self.c = color
 
     def draw(self, win):
