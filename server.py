@@ -2,6 +2,7 @@ import socket as s
 import pickle
 import threading as t
 from player import Player
+#
 
 host = s.gethostbyname(s.gethostname())
 port = 8000
