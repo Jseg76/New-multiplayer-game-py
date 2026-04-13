@@ -1,6 +1,7 @@
 #variables are camelCase
 #functions are under_score
 #please and thank you
+#ticks at scase
 #
 
 import pygame
