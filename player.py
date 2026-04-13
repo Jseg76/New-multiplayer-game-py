@@ -1,5 +1,4 @@
 import pygame
-# #
 
 class Block:
     def __init__(self, x, y, width, height, color):
@@ -27,7 +26,7 @@ class Player:
     def jump(self, strength):
         if not self.jumping:
             self.jumping = True
-            self.velY -= strength
+            self.velY = -strength
 
     def move_x(self):
         keys = pygame.key.get_pressed()
@@ -41,14 +40,49 @@ class Player:
         if keys[pygame.K_w]:
             self.jump(25)
         if abs(self.velY) <= self.maxVel:
-            self.velY += .5
+            self.velY += 2
+
+    def check_collision_top(self, objects):
+        for obj in objects:
+            if obj.y == self.bottom and self.left + self.w > obj.left and self.right - self.w < obj.right:
+                    return True
+        return False
+
+    def check_collision_right(self, objects):
+        for obj in objects:
+            if obj.left == self.right and self.top + self.h > obj.top and self.bottom - self.h < obj.bottom:
+                    return True
+        return False
+
+    def check_collision_left(self, objects):
+        for obj in objects:
+            if obj.right == self.left and self.top + self.h > obj.top and self.bottom - self.h < obj.bottom:
+                return True
+        return False
 
     def draw(self, win):
         pygame.draw.rect(win, self.c, (self.x, self.y, self.w, self.h))
 
-    def update(self):
+    def update(self, group):
         self.move_x()
-        self.x += self.velX
+        for i in range(int(round(self.velX))):
+            if not self.check_collision_right(group):
+                self.x += 1
+                self.left, self.right = self.x, self.x + self.w
+        for i in range(int(round(-self.velX))):
+            if not self.check_collision_left(group):
+                self.x -= 1
+                self.left, self.right = self.x, self.x + self.w
         self.velX = self.velX * self.friction
+
         self.move_y()
-        self.y += self.velY
+        for i in range(self.velY):
+            if not self.check_collision_top(group):
+                self.y += 1
+                self.top, self.bottom = self.y, self.y + self.h
+            else:
+                self.jumping = False
+                self.velY = 0
+        for i in range(-self.velY):
+            self.y -= 1
+            self.top, self.bottom = self.y, self.y + self.h

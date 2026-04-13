@@ -1,7 +1,6 @@
 #variables are camelCase
 #functions are under_score
 #please and thank you
-#
 
 import pygame
 import pickle
@@ -9,17 +8,17 @@ import socket as s
 from player import Player, Block
 
 WIDTH = 800; HEIGHT = 600
-win = pygame.display.set_mode((WIDTH, HEIGHT))
+win = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
 
 pygame.init()
 
 client = s.socket(s.AF_INET, s.SOCK_STREAM)
-client.connect(('192.168.68.74', 8000))
+client.connect(('127.0.0.1', 8000))
 
 running = True; clock = pygame.time.Clock()
 
 players = []
-player = Player(100, 100, 30, 30, (0,0,255))
+player = Player(100, 100, 30, 30, (255,0,0))
 
 testBlock = Block(400, 400, 50, 100, (0,0,0))
 floor = Block(0, 500, 800, 100, (153, 142, 104))
@@ -36,7 +35,7 @@ while running:
     for block in blocks:
         block.draw(win)
 
-    player.update()
+    player.update(blocks)
     for p in players:
         try:
             p.draw(win)
