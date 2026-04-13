@@ -1,5 +1,5 @@
 #variables are camelCase
-#functions are under_score
+#functions are under_scorea
 #please and thank you
 
 import pygame

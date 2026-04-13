@@ -18,12 +18,14 @@ client.connect(('127.0.0.1', 8000))
 running = True; clock = pygame.time.Clock()
 
 players = []
-player = Player(100, 100, 30, 30, (255,0,0))
+player = Player(100, 100, 20, 20, (255,0,0))
 
 testBlock = Block(400, 400, 50, 100, (0,0,0))
+testPlatform = Block(400, 200, 50, 100, (0,0,0))
 floor = Block(0, 500, 800, 100, (153, 142, 104))
 blocks = [floor,
-          testBlock,]
+          testBlock,
+          testPlatform,]
 
 while running:
     print(player.jumping)

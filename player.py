@@ -20,7 +20,7 @@ class Player:
         self.c = color
         self.velX, self.velY = 0, 0
         self.jumping = False
-        self.friction = 0.9
+        self.friction = 0.3
         self.maxVel = 30
 
     def jump(self, strength):
@@ -45,6 +45,12 @@ class Player:
     def check_collision_top(self, objects):
         for obj in objects:
             if obj.y == self.bottom and self.left + self.w > obj.left and self.right - self.w < obj.right:
+                    return True
+        return False
+
+    def check_collision_bottom(self, objects):
+        for obj in objects:
+            if obj.bottom == self.top and self.left + self.w > obj.left and self.right - self.w < obj.right:
                     return True
         return False
 
@@ -84,5 +90,8 @@ class Player:
                 self.jumping = False
                 self.velY = 0
         for i in range(-self.velY):
-            self.y -= 1
-            self.top, self.bottom = self.y, self.y + self.h
+            if not self.check_collision_bottom(group):
+                self.y -= 1
+                self.top, self.bottom = self.y, self.y + self.h
+            else:
+                self.velY = 0
