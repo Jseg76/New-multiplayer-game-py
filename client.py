@@ -18,14 +18,20 @@ client.connect(('127.0.0.1', 8000))
 running = True; clock = pygame.time.Clock()
 
 players = []
-player = Player(100, 100, 20, 20, (255,0,0))
+player = Player(137, 100, 30, 30, (255,0,0))
 
-testBlock = Block(400, 400, 50, 100, (0,0,0))
-testPlatform = Block(400, 200, 50, 100, (0,0,0))
+centralBlock = Block(350, 380, 100, 120, (0,0,0))
+topLeftPlatform = Block(100, 260, 100, 20, (0, 0, 0))
+bottomLeftPlatform = Block(100, 400, 100, 20, (0, 0, 0))
+topRightPlatform = Block(600, 260, 100, 20, (0, 0, 0))
+bottomRightPlatform = Block(600, 400, 100, 20, (0, 0, 0))
 floor = Block(0, 500, 800, 100, (153, 142, 104))
 blocks = [floor,
-          testBlock,
-          testPlatform,]
+          centralBlock,
+          bottomLeftPlatform,
+          topLeftPlatform,
+          bottomRightPlatform,
+          topRightPlatform,]
 
 while running:
     print(player.jumping)
@@ -47,6 +53,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:
+                pygame.display.toggle_fullscreen()
+            elif event.key == pygame.K_ESCAPE:
+                running = False
 
     pygame.display.update()
     clock.tick(60)
