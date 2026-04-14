@@ -24,9 +24,9 @@ centralBlock = Block(350, 410, 100, 90, (0,0,0))
 topLeftPlatform = Block(100, 275, 80, 20, (0, 0, 0))
 middleLeftPlatform = Block(200, 350, 80, 20, (0, 0, 0))
 bottomLeftPlatform = Block(100, 425, 80, 20, (0, 0, 0))
-topRightPlatform = Block(640, 275, 80, 20, (0, 0, 0))
-middleRightPlatform = Block(540, 350, 80, 20, (0, 0, 0))
-bottomRightPlatform = Block(640, 425, 80, 20, (0, 0, 0))
+topRightPlatform = Block(620, 275, 80, 20, (0, 0, 0))
+middleRightPlatform = Block(520, 350, 80, 20, (0, 0, 0))
+bottomRightPlatform = Block(620, 425, 80, 20, (0, 0, 0))
 floor = Block(0, 500, 800, 100, (153, 142, 104))
 blocks = [floor,
           centralBlock,
