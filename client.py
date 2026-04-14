@@ -13,7 +13,7 @@ win = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
 pygame.init()
 
 client = s.socket(s.AF_INET, s.SOCK_STREAM)
-client.connect(('192.168.68.73', 8000))
+client.connect(('10.218.144.50', 8000))
 
 running = True; clock = pygame.time.Clock()
 
@@ -21,17 +21,22 @@ players = []
 player = Player(137, 100, 25, 25, (255,0,0))
 
 centralBlock = Block(350, 410, 100, 90, (0,0,0))
-topLeftPlatform = Block(100, 260, 100, 20, (0, 0, 0))
-bottomLeftPlatform = Block(100, 400, 100, 20, (0, 0, 0))
-topRightPlatform = Block(600, 260, 100, 20, (0, 0, 0))
-bottomRightPlatform = Block(600, 400, 100, 20, (0, 0, 0))
+topLeftPlatform = Block(100, 275, 80, 20, (0, 0, 0))
+middleLeftPlatform = Block(200, 350, 80, 20, (0, 0, 0))
+bottomLeftPlatform = Block(100, 425, 80, 20, (0, 0, 0))
+topRightPlatform = Block(640, 275, 80, 20, (0, 0, 0))
+middleRightPlatform = Block(540, 350, 80, 20, (0, 0, 0))
+bottomRightPlatform = Block(640, 425, 80, 20, (0, 0, 0))
 floor = Block(0, 500, 800, 100, (153, 142, 104))
 blocks = [floor,
           centralBlock,
           bottomLeftPlatform,
+          middleLeftPlatform,
           topLeftPlatform,
           bottomRightPlatform,
-          topRightPlatform,]
+          middleRightPlatform,
+          topRightPlatform,
+          ]
 
 while running:
     try:

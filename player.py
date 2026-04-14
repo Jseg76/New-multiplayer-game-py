@@ -60,7 +60,7 @@ class Player:
     def move_y(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
-            self.jump(22)
+            self.jump(21)
         if abs(self.velY) <= self.maxVel:
             self.velY += 2
 
@@ -79,6 +79,12 @@ class Player:
     def check_collision_left(self, objects):
         for obj in objects:
             if obj.right == self.left and self.top + self.h > obj.top and self.bottom - self.h < obj.bottom:
+                return True
+        return False
+
+    def check_collision_bottom(self, objects):
+        for obj in objects:
+            if obj.bottom == self.top and self.left + self.w > obj.left and self.right - self.w < obj.right:
                 return True
         return False
 
@@ -106,5 +112,8 @@ class Player:
                 self.jumping = False
                 self.velY = 0
         for i in range(-self.velY):
-            self.y -= 1
-            self.top, self.bottom = self.y, self.y + self.h
+            if not self.check_collision_bottom(group):
+                self.y -= 1
+                self.top, self.bottom = self.y, self.y + self.h
+            else:
+                self.velY = 0
