@@ -2,19 +2,18 @@
 #functions are under_score
 #please and thank you
 
-
 import pygame
 import pickle
 import socket as s
 from player import Player, Block
 
-WIDTH = 800; HEIGHT = 600
-win = pygame.display.set_mode((WIDTH, HEIGHT))
-
 pygame.init()
 
+WIDTH = 800; HEIGHT = 600
+win = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
+
 client = s.socket(s.AF_INET, s.SOCK_STREAM)
-client.connect(('192.168.68.74', 8000))
+client.connect(('192.168.68.76', 8000))
 
 running = True; clock = pygame.time.Clock()
 
@@ -27,7 +26,6 @@ blocks = [floor,
           testBlock,]
 
 while running:
-    print(player.jumping)
     try:
         client.send(pickle.dumps(player))
         players = pickle.loads(client.recv(2048))
@@ -36,14 +34,22 @@ while running:
     for block in blocks:
         block.draw(win)
 
-    player.update()
+    player.update(blocks)
+    mouseX, mouseY = pygame.mouse.get_pos()
+
     for p in players:
         try:
             p.draw(win)
         except:
             ...
+    for proj in player.projectiles:
+        proj.update()
+    for proj in p.projectiles:
+        proj.draw(win)
 
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            player.shoot(mouseX, mouseY)
         if event.type == pygame.QUIT:
             running = False
 

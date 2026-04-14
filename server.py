@@ -1,8 +1,8 @@
+
 import socket as s
 import pickle
 import threading as t
 from player import Player
-
 
 host = s.gethostbyname(s.gethostname())
 port = 8000
@@ -20,7 +20,7 @@ clientNum = 0
 def handle_client(conn, num):
     global clientNum
     clients.append(conn)
-    playerData.append(num)
+    playerData.append(0)
     while True:
         try:
             data = pickle.loads(conn.recv(2048))
@@ -30,7 +30,11 @@ def handle_client(conn, num):
             clientNum -= 1
             conn.close()
             clients.remove(conn)
-            print('client disconnected')
+            try:
+                playerData.pop(num)
+            except:
+                ...
+            print(f'client disconnected {playerData}')
             break
 
 while True:
