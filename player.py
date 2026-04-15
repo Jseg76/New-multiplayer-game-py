@@ -45,8 +45,10 @@ class Player:
         self.top, self.bottom = y, y + height
         self.left, self.right = x, x + width
         self.c = color
-        self.health = 0
-        self.maxHealth = 0
+        self.health = 100
+        self.maxHealth = 100
+        self.healthBar = (self.x, self.y + 30, 40, 10)
+        self.shealthBarBorder = (self.x, self.y + 32, 44, 14)
         self.velX, self.velY = 0, 0
         self.jumping = False
         self.friction = .3
@@ -106,6 +108,8 @@ class Player:
 
     def draw(self, win):
         pygame.draw.rect(win, self.c, (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(win, (0, 0, 0), self.shealthBarBorder)
+        pygame.draw.rect(win, (0, 255, 50), self.healthBar)
 
     def update(self, group):
         self.move_x()
@@ -134,3 +138,6 @@ class Player:
                 self.top, self.bottom = self.y, self.y + self.h
             else:
                 self.velY = 0
+
+        self.healthBar = (self.x - 7.5, self.y - 18, 40 / (self.maxHealth / self.health), 6)
+        self.shealthBarBorder = (self.x - 10.5, self.y - 21, 46, 12)
