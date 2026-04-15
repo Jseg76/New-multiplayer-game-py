@@ -1,4 +1,5 @@
 import pygame
+import time as t
 from math import sin, cos, atan2
 #
 
@@ -17,6 +18,7 @@ class Projectile:
     def __init__(self, x, y, mouseX, mouseY, speed):
         self.x, self.y = x, y
         self.speed = speed
+        self.lifetime = 1
         self.velX = self.speed * sin(atan2(mouseX - self.x, mouseY - self.y))
         self.velY = self.speed * cos(atan2(mouseX - self.x, mouseY - self.y))
 
@@ -25,9 +27,16 @@ class Projectile:
         if -10 > self.x > win.get_width()+10 or -10 > self.y > win.get_height()+10:
             print('e')
 
+    def checkCollide(self, groups):
+        for item in groups:
+            if item.left < self.x < item.right and item.top < self.y < item.bottom:
+                self.lifetime = 0
+
     def update(self):
         self.x += self.velX
         self.y += self.velY
+        if not 0 < self.x < 800 or not 0 < self.y < 600:
+            self.lifetime = 0
 
 class Player:
     def __init__(self, x, y, width, height, color):
@@ -36,14 +45,21 @@ class Player:
         self.top, self.bottom = y, y + height
         self.left, self.right = x, x + width
         self.c = color
+        self.health = 0
+        self.maxHealth = 0
         self.velX, self.velY = 0, 0
         self.jumping = False
         self.friction = .3
         self.maxVel = 30
         self.projectiles = []
+        self.shootable = True
 
     def shoot(self, mouseX, mouseY):
-        self.projectiles.append(Projectile(self.x+self.w/2, self.y+self.h/2, mouseX, mouseY, 15))
+        if self.shootable:
+            self.shootable = False
+            self.projectiles.append(Projectile(self.x+self.w/2, self.y+self.h/2, mouseX, mouseY, 15))
+            t.sleep(1)
+            self.shootable = True
 
     def jump(self, strength):
         if not self.jumping:
@@ -108,6 +124,7 @@ class Player:
             if not self.check_collision_top(group):
                 self.y += 1
                 self.top, self.bottom = self.y, self.y + self.h
+                self.jumping = True
             else:
                 self.jumping = False
                 self.velY = 0

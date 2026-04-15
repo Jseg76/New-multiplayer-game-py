@@ -6,6 +6,7 @@
 import pygame
 import pickle
 import socket as s
+import threading as th
 from player import Player, Block
 
 WIDTH = 800; HEIGHT = 600
@@ -54,15 +55,20 @@ while running:
         try:
             p.draw(win)
             for proj in p.projectiles:
-                proj.draw(win)
+                if proj.lifetime != 0:
+                    proj.draw(win)
+                    pass
         except:
             ...
     for proj in player.projectiles:
-        proj.update()
+        if proj.lifetime != 0:
+            proj.update()
+        proj.checkCollide(blocks)
+
 
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            player.shoot(mouseX, mouseY)
+            th.Thread(target=player.shoot, args=(mouseX, mouseY)).start()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_f:
                 pygame.display.toggle_fullscreen()
