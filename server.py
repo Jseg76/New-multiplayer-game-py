@@ -1,4 +1,3 @@
-
 import socket as s
 import pickle
 import threading as t
@@ -20,7 +19,7 @@ clientNum = 0
 def handle_client(conn, num):
     global clientNum
     clients.append(conn)
-    playerData.append(0)
+    playerData.append(Player(-50, -50, 10, 10, (0, 0, 0)))
     while True:
         try:
             data = pickle.loads(conn.recv(2048))

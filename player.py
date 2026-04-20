@@ -45,16 +45,17 @@ class Player:
         self.top, self.bottom = y, y + height
         self.left, self.right = x, x + width
         self.c = color
-        self.health = 100
+        self.health = 50
         self.maxHealth = 100
         self.healthBar = (self.x, self.y + 30, 40, 10)
-        self.shealthBarBorder = (self.x, self.y + 32, 44, 14)
+        self.healthBarBorder = (self.x, self.y + 32, 44, 14)
         self.velX, self.velY = 0, 0
         self.jumping = False
+        self.damaged = False
+        self.shootable = True
         self.friction = .3
         self.maxVel = 30
         self.projectiles = []
-        self.shootable = True
 
     def shoot(self, mouseX, mouseY):
         if self.shootable:
@@ -108,7 +109,7 @@ class Player:
 
     def draw(self, win):
         pygame.draw.rect(win, self.c, (self.x, self.y, self.w, self.h))
-        pygame.draw.rect(win, (0, 0, 0), self.shealthBarBorder)
+        pygame.draw.rect(win, (0, 0, 0), self.healthBarBorder)
         pygame.draw.rect(win, (0, 255, 50), self.healthBar)
 
     def update(self, group):
@@ -140,4 +141,4 @@ class Player:
                 self.velY = 0
 
         self.healthBar = (self.x - 7.5, self.y - 18, 40 / (self.maxHealth / self.health), 6)
-        self.shealthBarBorder = (self.x - 10.5, self.y - 21, 46, 12)
+        self.healthBarBorder = (self.x - 10.5, self.y - 21, 46, 12)

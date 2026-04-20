@@ -64,6 +64,7 @@ while running:
         if proj.lifetime != 0:
             proj.update()
         proj.checkCollide(blocks)
+        proj.checkCollideDamage(players)
 
 
     for event in pygame.event.get():
